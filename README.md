@@ -3,10 +3,16 @@ Co-Vigilant System
 
 A System that can discover, evaluate, understand, and prevent adverse effects or any other problems for restaurant.
 
-Team Member
-------------
+**Team Member :** Jianfeng Lyu, Xiaoyu Wang, Kaiqing Wang, Zixuan Zeng,
+Joshua Kiss
 
-Jianfeng Lyu, Xiaoyu Wang, Kaiqing Wang, Zixuan Zeng, Joshua Kiss
+Python
+================================
+
+**Note:**The requirement.txt can help us to install all the dependency
+package. the commend is : 
+
+    pip3 install -r requirements.txt
 
 DataClean
 ------------
