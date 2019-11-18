@@ -31,3 +31,7 @@ Convert review.json to CSV format with the following command:
 	python json_to_csv_converter.py /dataset/yelp/dataset/review.json
 
 After the command is executed, the corresponding CSV file review.csv will be generated in the same directory as review.json.
+
+Convert all json file to sql file with the following command:
+	./json_to_sql_converter.sh
+After the command is executed, the 6 sql file : business.sql, checkin.sql, photo.sql, review.sql, tip.sql and user.sql will be generated with the same name as json file.
