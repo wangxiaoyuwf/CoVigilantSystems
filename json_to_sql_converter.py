@@ -36,8 +36,6 @@ def json2sql(sql_f, table_name,json_str):
 
 # python json_to_sql_converter.py jsonfilename, then it will create a sql file
 if __name__ == '__main__':
-    print("Convert Yelp Dataset data from json to sql")
-    print("Begin...")
     parser = argparse.ArgumentParser(
             description='Convert Yelp Dataset data from json to sql'
     )
@@ -50,4 +48,3 @@ if __name__ == '__main__':
     json_file = args.json_file
     sql_file = '{0}.sql'.format(json_file.split('.json')[0])
     read_and_write_file(json_file, sql_file)
-    print("Done!\n")
