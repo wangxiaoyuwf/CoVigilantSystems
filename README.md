@@ -17,11 +17,18 @@ package. the commend is :
 Database
 ================================
 I put the data what we need on the database of VM that professor give
-us.(url: [http://dmdb1.cs.hofstra.edu/](http://dmdb1.cs.hofstra.edu/) ) And I create a new database and a new account for our team
+us.(url: [http://dmdb1.cs.hofstra.edu/](http://dmdb1.cs.hofstra.edu/) ).
+
+    Note: You should connect the vpn of our school, before connecting the
+    database. 
+
+And I create a new database and a new account for our team
 `database:nonameteam. username:nonameteam. userpassword:nonameteam.` For
 every thing makes sense, I also write a new sample code showing how to
 connect the database .(
 [SampleGetData.py](./CoVigilantSystems/SampleGetData.py) ).
+
+[The Github url of pymysql](https://github.com/PyMySQL/PyMySQL/)
 
 DataClean
 ------------
