@@ -27,6 +27,20 @@ def query_data(table_name, column_name, value) -> pd.DataFrame:
     result = pd.DataFrame(list(query_result))
     return result
 
+def query_data_by_sql(sql) -> pd.DataFrame:
+    sql_command = sql
+    cursor = db.cursor()
+    cursor.execute(sql_command)
+    query_result = cursor.fetchall()
+    result = pd.DataFrame(list(query_result))
+    return result
+
+def get_cursor():
+    cursor = db.cursor()
+    return cursor
+
+def commit_sql():
+    db.commit()
 
 # This is main function,and this is called only as main script.That means this part would be executed,
 # when this script is called by other script as library.
