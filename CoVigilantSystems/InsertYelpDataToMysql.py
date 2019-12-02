@@ -1,4 +1,5 @@
 # read yelp data and insert them to Mysql
+# Please don't run this script until you totally understand it.
 import json
 import pymysql
 
@@ -9,12 +10,13 @@ review_create_sql = """CREATE TABLE review (
        user_id VARCHAR(100),
        business_id VARCHAR(200),
        stars INT,
+       date DATETIME,
        text VARCHAR(10000) NOT NULL,
        useful INT,
        funny INT,
        cool INT,
        INDEX (review_id))"""
-review_columns_list = ['review_id', 'user_id', 'business_id', 'stars', 'text', 'useful', 'funny', 'cool']
+review_columns_list = ['review_id', 'user_id', 'business_id', 'stars', 'date', 'text', 'useful', 'funny', 'cool']
 
 business_file = "/Users/jianfenglv/Desktop/yelp_dataset/business.json"
 business_table_name = "business"
@@ -72,6 +74,8 @@ def data_insert(db, file, table_name, columns_list):
                     review_text = json.loads(lines)  # run every line data
                     temp = []
                     for c in columns_list:
+                        if c == 'date':
+                            print(review_text[c])
                         temp.append(json.dumps(review_text[c]) if type(review_text[c])==dict else review_text[c])
                     result.append(tuple(temp))
                 # print(insert_re)
@@ -80,6 +84,7 @@ def data_insert(db, file, table_name, columns_list):
                 db.commit()
             except Exception as e:
                 print(u'loading the %sth , the last one line......' % i)
+                print(result)
                 cursor.executemany(insert_re, result)
                 print(result)
                 db.commit()
@@ -89,11 +94,11 @@ def data_insert(db, file, table_name, columns_list):
 
 
 if __name__ == "__main__":
-    # db = pymysql.connect(host='192.168.64.2', user='yelp', password='yelp', db='yelp_data')
-    db = pymysql.connect(host='10.22.12.131', user='nonameteam', password='nonameteam', db='nonameteam')
+    db = pymysql.connect(host='192.168.64.2', user='yelp', password='yelp', db='yelp_data')
+    # db = pymysql.connect(host='10.22.12.131', user='nonameteam', password='nonameteam', db='nonameteam')
     db.cursor()
-    # create_table(db, table_name=review_table_name, sql=review_create_sql)
-    # data_insert(db, file=review_file, table_name=review_table_name, columns_list=review_columns_list)
-    create_table(db, table_name=business_table_name, sql=business_create_sql)
-    data_insert(db, file=business_file, table_name=business_table_name, columns_list=business_columns_list)
+    create_table(db, table_name=review_table_name, sql=review_create_sql)
+    data_insert(db, file=review_file, table_name=review_table_name, columns_list=review_columns_list)
+    # create_table(db, table_name=business_table_name, sql=business_create_sql)
+    # data_insert(db, file=business_file, table_name=business_table_name, columns_list=business_columns_list)
     db.cursor().close()

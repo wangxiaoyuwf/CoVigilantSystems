@@ -1,10 +1,12 @@
 # This is a sample how to get data from database and convert data to a dataframe of pandas
+import numpy as np
 import pymysql
 import atexit
 import pandas as pd
 
 # Connect the database.
-db = pymysql.connect(host='10.22.12.131', user='nonameteam', password='nonameteam', db='nonameteam')
+db = pymysql.connect(host='10.22.12.131', user='nonameteam', password='nonameteam', db='nonameteam',
+                     cursorclass=pymysql.cursors.DictCursor)
 
 
 # This function is registered, and it will be called when the application complete.
