@@ -74,8 +74,6 @@ def data_insert(db, file, table_name, columns_list):
                     review_text = json.loads(lines)  # run every line data
                     temp = []
                     for c in columns_list:
-                        if c == 'date':
-                            print(review_text[c])
                         temp.append(json.dumps(review_text[c]) if type(review_text[c])==dict else review_text[c])
                     result.append(tuple(temp))
                 # print(insert_re)
@@ -94,8 +92,8 @@ def data_insert(db, file, table_name, columns_list):
 
 
 if __name__ == "__main__":
-    db = pymysql.connect(host='192.168.64.2', user='yelp', password='yelp', db='yelp_data')
-    # db = pymysql.connect(host='10.22.12.131', user='nonameteam', password='nonameteam', db='nonameteam')
+    # db = pymysql.connect(host='192.168.64.2', user='yelp', password='yelp', db='yelp_data')
+    db = pymysql.connect(host='10.22.12.131', user='nonameteam', password='nonameteam', db='nonameteam')
     db.cursor()
     create_table(db, table_name=review_table_name, sql=review_create_sql)
     data_insert(db, file=review_file, table_name=review_table_name, columns_list=review_columns_list)
