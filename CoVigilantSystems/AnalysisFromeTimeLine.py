@@ -12,19 +12,23 @@ import getopt
 
 def stars_by_time_show(df, x_index):
     grouped = df.groupby(x_index)['stars'].mean().round(2)
-    plt.figure(figsize=(11, 7))
-    sns.pointplot(grouped.index, grouped.values)
-    plt.xlabel(x_index, fontsize=14)
-    plt.ylabel('stars', fontsize=14)
-    title = 'stars by ' + x_index
-    plt.title(title, fontsize=15)
-    plt.tick_params(labelsize=14)
-    for i, v in enumerate(grouped):
-        plt.text(i, v, str(v), fontweight='bold', fontsize=14)
-    # pause for 3 seconds as you display the histograms
-    plt.pause(3.0)
-    plt.savefig(title)
-    plt.show(block=True)
+    json_data = grouped.to_json()
+    print(json_data)
+    return json_data
+
+    # plt.figure(figsize=(11, 7))
+    # sns.pointplot(grouped.index, grouped.values)
+    # plt.xlabel(x_index, fontsize=14)
+    # plt.ylabel('stars', fontsize=14)
+    # title = 'stars by ' + x_index
+    # plt.title(title, fontsize=15)
+    # plt.tick_params(labelsize=14)
+    # for i, v in enumerate(grouped):
+    #     plt.text(i, v, str(v), fontweight='bold', fontsize=14)
+    # # pause for 3 seconds as you display the histograms
+    # plt.pause(3.0)
+    # plt.savefig(title)
+    # plt.show(block=True)
 
 
 def starts_by_hour(df):
