@@ -54,7 +54,7 @@ Convert all json file to sql file with the following command:
 	
 After the command is executed, the 6 sql file : business.sql, checkin.sql, photo.sql, review.sql, tip.sql and user.sql will be generated with the same name as json file.
 
-DataClean
+Data Analysis
 ------------
 AnalysisFromeTimeLine.py is used to analysis the Stars of one RESTAURANT users input from the time line. You can get the mean of stars of a Restaurant by year, month, day or hour(according to what time you input by -t). The executed command is : 
 
