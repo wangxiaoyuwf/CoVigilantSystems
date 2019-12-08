@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 # Author:Xiaoyu Wang
 # data:12/8/2019
-
+# This file is used to analysis the key words for positive and negative and get the polarity of them
+# Then return the json data to the front side
+# # The executed command is : python3 KeywordsAnalysis.py -n 'SpinalWorks Chiropractic'
 
 import csv
 import sys
@@ -69,7 +71,7 @@ def get_labeled_data_set(df):
     df.reset_index(drop=True, inplace=True)
 
     # train data and test data
-    train_data, test_data = train_test_split(df[['text', 'labels']], test_size=0.5)
+    train_data, test_data = train_test_split(df[['text', 'labels']], test_size=0.2)
     terms_train = ReviewsToWords(list(train_data['text']), positive_words, negative_words)
     class_train = list(train_data['labels'])
     terms_test = ReviewsToWords(list(test_data['text']), positive_words, negative_words)

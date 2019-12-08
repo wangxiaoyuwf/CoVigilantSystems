@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 # Author:Xiaoyu Wang
 # data:12/1/2019
+# This file is used to analysis the Stars of one RESTAURANT users input from the time line
+# The executed command is : python3 AnalysisFromeTimeLine.py -n 'SpinalWorks Chiropractic' -t year (|month|day|hour)
+
 
 import SampleGetData as sql
 import pandas as pd
