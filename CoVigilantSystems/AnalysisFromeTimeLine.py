@@ -14,7 +14,7 @@ def stars_by_time_show(df, x_index):
     grouped = df.groupby(x_index)['stars'].mean().round(2)
     json_data = grouped.to_json()
     print(json_data)
-    return json_data
+    # return json_data
 
     # plt.figure(figsize=(11, 7))
     # sns.pointplot(grouped.index, grouped.values)
@@ -34,27 +34,27 @@ def stars_by_time_show(df, x_index):
 def starts_by_hour(df):
     df['date'] = pd.to_datetime(df.date, format='%m/%d/%Y %I:%M:%S %p')
     df['hour'] = df.date.dt.hour
-    print(df.head())
+    # print(df.head())
     stars_by_time_show(df, 'hour')
 
 
 def stars_by_day(df):
     df['date'] = pd.to_datetime(df.date, format='%m/%d/%Y %I:%M:%S %p')
     df['day'] = df.date.dt.day
-    print(df.head())
+    # print(df.head())
     stars_by_time_show(df, 'day')
 
 
 def stars_by_month(df):
     df['date'] = pd.to_datetime(df.date, format='%m/%d/%Y %I:%M:%S %p')
     df['month'] = df.date.dt.month
-    print(df.head())
+    # print(df.head())
     stars_by_time_show(df, 'month')
 
 def stars_by_year(df):
     df['date'] = pd.to_datetime(df.date, format='%m/%d/%Y %I:%M:%S %p')
     df['year'] = df.date.dt.year
-    print(df.head())
+    # print(df.head())
     stars_by_time_show(df, 'year')
 
 
@@ -65,18 +65,18 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "n:t:", ["name=", "time="])
     except getopt.GetoptError:
-        print('test.py -n <name> -t <time>')
+        # print('test.py -n <name> -t <time>')
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-n", "--name"):
             name = arg
         elif opt in ("-t", "--time"):
             time = arg
-    print('RESTAURANT : ', name, ' by ', time)
+    # print('RESTAURANT : ', name, ' by ', time)
 
     sql_command = 'select stars, date from review where business_id = (select business_id from business where name = "' + name + '")'
     review = sql.query_data_by_sql(sql_command)
-    print(review.head())
+    # print(review.head())
     if time == 'year':
         stars_by_year(review)
     elif time == 'month':
