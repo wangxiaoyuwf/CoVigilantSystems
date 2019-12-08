@@ -11,6 +11,7 @@ import getopt
 import re
 import matplotlib.pyplot as plt
 import seaborn as sns
+import json
 from nltk.corpus import stopwords
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
@@ -98,7 +99,8 @@ def get_labeled_data_set(df):
     # print(polarity_score[polarity_score.polarity>0].sort_values('polarity', ascending=False)[:20])
     # print(polarity_score[polarity_score.polarity<0].sort_values('polarity', ascending=True)[:20])
     dict_key_words = {'positive': dict_positive, 'negative': dict_negative}
-    print(dict_key_words)
+    json_key_words = json.dumps(dict_key_words)
+    print(json_key_words)
 
 
 # get parameter from the command line and analysis the data that users input
