@@ -93,9 +93,12 @@ def get_labeled_data_set(df):
     polarity_score.frequency = polarity_score.frequency.astype(float)
     # polarity_score[polarity_score.polarity>0].sort_values('polarity', ascending=False)[:20]
     polarity_score.drop(['score', 'frequency'], axis=1, inplace=True)
-    print('polarity score:')
-    print(polarity_score[polarity_score.polarity>0].sort_values('polarity', ascending=False)[:20])
-    print(polarity_score[polarity_score.polarity<0].sort_values('polarity', ascending=True)[:20])
+    dict_positive = (polarity_score[polarity_score.polarity>0].sort_values('polarity', ascending=False)[:30]).groupby('word')['polarity'].apply(lambda x:x).to_dict()
+    dict_negative = (polarity_score[polarity_score.polarity<0].sort_values('polarity', ascending=False)[:30]).groupby('word')['polarity'].apply(lambda x:x).to_dict()
+    # print(polarity_score[polarity_score.polarity>0].sort_values('polarity', ascending=False)[:20])
+    # print(polarity_score[polarity_score.polarity<0].sort_values('polarity', ascending=True)[:20])
+    dict_key_words = {'positive': dict_positive, 'negative': dict_negative}
+    print(dict_key_words)
 
 
 # get parameter from the command line and analysis the data that users input
@@ -109,7 +112,7 @@ def main(argv):
     for opt, arg in opts:
         if opt in ("-n", "--name"):
             name = arg
-    print('RESTAURANT NAME : ', name)
+    # print('RESTAURANT NAME : ', name)
 
     sql_command = 'select stars, text from review where business_id = (select business_id from business where name = "' + name + '")'
     review = sql.query_data_by_sql(sql_command)
