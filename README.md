@@ -53,3 +53,14 @@ Convert all json file to sql file with the following command:
 	./json_to_sql_converter.sh
 	
 After the command is executed, the 6 sql file : business.sql, checkin.sql, photo.sql, review.sql, tip.sql and user.sql will be generated with the same name as json file.
+
+DataClean
+------------
+AnalysisFromeTimeLine.py is used to analysis the Stars of one RESTAURANT users input from the time line. You can get the mean of stars of a Restaurant by year, month, day or hour(according to what time you input by -t). The executed command is : 
+
+	python3 AnalysisFromeTimeLine.py -n 'SpinalWorks Chiropractic' -t year (|month|day|hour) 
+
+KeywordsAnalysis.py is used to analysis the key words for positive and negative and get the polarity of them. Then return the json data to the front side.The executed command is : 
+
+	python3 KeywordsAnalysis.py -n 'SpinalWorks Chiropractic'
+
