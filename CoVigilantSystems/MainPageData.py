@@ -9,6 +9,7 @@ display.max_columns = 50
 display.max_rows = 10
 display.max_colwidth = 10
 display.width = None
+display.float_format = lambda x: '%.4f' % x
 
 # filter restaurants of US
 states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
@@ -44,7 +45,7 @@ def insert_column_restaurants_categories():
     sql.commit_sql()
 
 
-def show_count_of_restaurants_by_category():
+def get_count_of_restaurants_by_category():
     count_categories = []
     for c in restaurant_categories:
         count_categories.append(
@@ -54,6 +55,10 @@ def show_count_of_restaurants_by_category():
     df_categories = pd.DataFrame(sorted(dict_categories.items(), key=lambda item: item[1], reverse=False),
                                  columns=['categories', 'count'])
     print(df_categories)
+    return df_categories
+
+
+def show_count_of_restaurants_by_category(df_categories):
     plt.barh(np.arange(len(df_categories['categories'])), df_categories['count'], align='center', alpha=0.4)
     plt.yticks(np.arange(len(df_categories['categories'])), df_categories['categories'])
     for a, b in zip(df_categories['count'], np.arange(len(df_categories['categories']))):
@@ -61,16 +66,19 @@ def show_count_of_restaurants_by_category():
     plt.xlabel('Number of restaurants')
     plt.title('Count of Restaurants by Category', fontsize=15)
     plt.show()
-    0
 
 
-def show_count_of_restaurants_by_city():
+def get_count_of_restaurants_by_city():
     count_city = sql.query_data_by_sql(
         sql="select city,count(*) as count from business where state in "
             + str(states).replace('[', '(').replace(']', ')')
             + " group by city")
     top_10_count_city = count_city.sort_values(by='count', ascending=False)[:10]
     print(top_10_count_city)
+    return top_10_count_city
+
+
+def show_count_of_restaurants_by_city(top_10_count_city):
     plt.figure(figsize=(11, 6))
     sns.barplot(x=np.arange(len(top_10_count_city['city'])), y=top_10_count_city['count'],
                 palette=sns.color_palette("BuGn_r", len(top_10_count_city['city'])))
@@ -83,7 +91,6 @@ def show_count_of_restaurants_by_city():
     for a, b in zip(np.arange(len(top_10_count_city['city'])), top_10_count_city['count']):
         plt.text(a, b * 1.02, str(b), horizontalalignment='center', fontweight='bold', fontsize=14)
     plt.show()
-    0
 
 
 def main():
@@ -93,8 +100,12 @@ def main():
     # print(sql.query_data_by_sql("select * from business where restaurants_categories='Canadian'"))
     # # ------------only run one time-----------------
 
-    # show_count_of_restaurants_by_category()
-    show_count_of_restaurants_by_city()
+    df_temp = get_count_of_restaurants_by_category()
+    sql.insert_dataframe_to_sql(df_temp, 'count_of_restaurants_by_category')
+    show_count_of_restaurants_by_category(df_temp)
+    df_temp = get_count_of_restaurants_by_city()
+    sql.insert_dataframe_to_sql(df_temp, 'count_of_restaurants_by_city')
+    show_count_of_restaurants_by_city(df_temp)
     0
 
 
