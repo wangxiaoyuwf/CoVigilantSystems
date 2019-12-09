@@ -107,18 +107,19 @@ def get_labeled_data_set(df):
 
 # get parameter from the command line and analysis the data that users input
 def main(argv):
-    name = ''
+    business_id = ''
     try:
-        opts, args = getopt.getopt(argv, "n:", ["name="])
+        opts, args = getopt.getopt(argv, "i:", ["id="])
     except getopt.GetoptError:
-        print('KeywordsAnalysis.py -n <name>')
+        print('KeywordsAnalysis.py -i <id>')
         sys.exit(2)
     for opt, arg in opts:
-        if opt in ("-n", "--name"):
-            name = arg
-    # print('RESTAURANT NAME : ', name)
+        if opt in ("-i", "--id"):
+            business_id = arg
+    print('RESTAURANT ID : ', business_id)
 
-    sql_command = 'select stars, text from review where business_id = (select business_id from business where name = "' + name + '")'
+    sql_command = 'select stars, text from review where business_id = "' + business_id + '";'
+    print(sql_command)
     review = sql.query_data_by_sql(sql_command)
     get_labeled_data_set(review)
 

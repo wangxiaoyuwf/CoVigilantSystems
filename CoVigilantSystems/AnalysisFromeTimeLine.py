@@ -69,7 +69,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "i:t:", ["id=", "time="])
     except getopt.GetoptError:
-        # print('test.py -i <id> -t <time>')
+        print('test.py -i <id> -t <time>')
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-i", "--id"):
