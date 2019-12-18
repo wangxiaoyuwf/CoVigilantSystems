@@ -116,11 +116,14 @@ def main(argv):
     for opt, arg in opts:
         if opt in ("-i", "--id"):
             business_id = arg
-    print('RESTAURANT ID : ', business_id)
+    # print('RESTAURANT ID : ', business_id)
 
     sql_command = 'select stars, text from review where business_id = "' + business_id + '";'
-    print(sql_command)
+    # print(sql_command)
     review = sql.query_data_by_sql(sql_command)
+    if review.empty:
+        print(json.dumps({}))
+        return
     get_labeled_data_set(review)
 
 
