@@ -58,6 +58,33 @@ def get_count_of_restaurants_by_category():
     return df_categories
 
 
+def get_review_count_of_restaurants_by_category():
+    count_categories = []
+    for c in restaurant_categories:
+        count_categories.append(
+            sql.query_data_by_sql(sql="select sum(review_count) from business where restaurants_categories = '" + c + "'").at[
+                0, 'sum(review_count)'])
+    dict_categories = dict(zip(restaurant_categories, count_categories))
+    df_categories = pd.DataFrame(sorted(dict_categories.items(), key=lambda item: item[1], reverse=False),
+                                 columns=['categories', 'review_sum'])
+    print(df_categories)
+    return df_categories
+
+
+def get_rate_avg_of_restaurants_by_category():
+    count_categories = []
+    for c in restaurant_categories:
+        count_categories.append(
+            sql.query_data_by_sql(
+                sql="select avg(stars) from business where restaurants_categories = '" + c + "'").at[
+                0, 'avg(stars)'])
+    dict_categories = dict(zip(restaurant_categories, count_categories))
+    df_categories = pd.DataFrame(sorted(dict_categories.items(), key=lambda item: item[1], reverse=True),
+                                 columns=['categories', 'stars_avg'])
+    print(df_categories)
+    return df_categories
+
+
 def show_count_of_restaurants_by_category(df_categories):
     plt.barh(np.arange(len(df_categories['categories'])), df_categories['count'], align='center', alpha=0.4)
     plt.yticks(np.arange(len(df_categories['categories'])), df_categories['categories'])
@@ -99,13 +126,16 @@ def main():
     # insert_column_restaurants_categories()
     # print(sql.query_data_by_sql("select * from business where restaurants_categories='Canadian'"))
     # # ------------only run one time-----------------
-
     df_temp = get_count_of_restaurants_by_category()
     sql.insert_dataframe_to_sql(df_temp, 'count_of_restaurants_by_category')
-    show_count_of_restaurants_by_category(df_temp)
+    # show_count_of_restaurants_by_category(df_temp)
     df_temp = get_count_of_restaurants_by_city()
     sql.insert_dataframe_to_sql(df_temp, 'count_of_restaurants_by_city')
-    show_count_of_restaurants_by_city(df_temp)
+    # show_count_of_restaurants_by_city(df_temp)
+    df_temp = get_review_count_of_restaurants_by_category()
+    sql.insert_dataframe_to_sql(df_temp, 'review_count_of_restaurants_by_category')
+    df_temp = get_rate_avg_of_restaurants_by_category()
+    sql.insert_dataframe_to_sql(df_temp, 'rate_avg_of_restaurants_by_category')
     0
 
 

@@ -23,7 +23,8 @@ pd.set_option('display.float_format', lambda x: '%.4f' % x)
 
 
 # convert reviews to words
-def ReviewsToWords(reviews, positive_words, negative_words):
+def ReviewsToWords(df, positive_words, negative_words):
+    reviews = list(df['text'])
     stop_words = set(stopwords.words("english"))
     english_punctuations = [',', '.', ':', ';', '?', '(', ')', '[', ']', '&', '!', '*', '@', '#', '$', '%']
     unuseful_positive_words = ['great','amazing','love','best','awesome','excellent','good',
@@ -59,10 +60,10 @@ def get_labeled_data_set(df):
     df.drop(df[df['labels'] == 'neural'].index, axis=0, inplace=True)
     df.reset_index(drop=True, inplace=True)
     # load positive and negative words
-    file_positive = open('positive.txt', encoding='ISO-8859-1')
+    file_positive = open('positive.txt', encoding='UTF-8')
     reader = csv.reader(file_positive)
     positive_words = [word[0] for word in reader]
-    file_negative = open('negative.txt', encoding='ISO-8859-1')
+    file_negative = open('negative.txt', encoding='UTF-8')
     reader = csv.reader(file_negative)
     negative_words = [word[0] for word in reader]
 
@@ -72,10 +73,10 @@ def get_labeled_data_set(df):
 
     # train data and test data
     train_data, test_data = train_test_split(df[['text', 'labels']], test_size=0.2)
-    terms_train = ReviewsToWords(list(train_data['text']), positive_words, negative_words)
+    terms_train = ReviewsToWords(train_data, positive_words, negative_words)
     class_train = list(train_data['labels'])
-    terms_test = ReviewsToWords(list(test_data['text']), positive_words, negative_words)
-    class_test = list(test_data['labels'])
+    # terms_test = ReviewsToWords(list(test_data['text']), positive_words, negative_words)
+    # class_test = list(test_data['labels'])
 
     vectorizer = CountVectorizer()
     feature_train_counts = vectorizer.fit_transform(terms_train)
@@ -129,5 +130,3 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-
-    
